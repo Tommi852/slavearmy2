@@ -1,0 +1,29 @@
+#!/bin/bash
+GREEN='\033[1;32m'
+NC='\033[0m'
+sudo cp Vagrantfile /home/.
+echo "\n ${GREEN}vagrantfile copied! ${NC} \n \n"
+cd /home/
+sudo wget http://timonen.me/~tommi/boxit/vagrant.deb
+printf "\n ${GREEN} Vagrant downloaded! ${NC} \n \n"
+sudo dpkg -i vagrant.deb
+printf "\n ${GREEN} Vagrant installed! ${NC} \n \n"
+sudo apt-get update
+sudo apt-get -y install virtualbox
+printf "\n ${GREEN} Virtualbox installed! ${NC} \n \n"
+# fdisk -l to check disks
+sudo mount -t ext4 /dev/sda1 /mnt
+printf "\n ${GREEN} HDD mounted! ${NC} \n \n \n \n"
+sudo vboxmanage setproperty machinefolder /mnt
+printf "\n ${GREEN} Machine folder changed! ${NC} \n \n"
+sudo dd if=/dev/zero of=/mnt/swapfile1 bs=1024 count=10240000
+printf "\n ${GREEN} Swap file created! ${NC} \n \n"
+sudo chown root:root /mnt/swapfile1
+sudo chmod 0600 /mnt/swapfile1
+sudo mkswap /mnt/swapfile1
+sudo swapon /mnt/swapfile1
+printf "\n ${GREEN} Swap file applied! ${NC} \n \n"
+sudo sysctl vm.swappiness=100
+printf "\n ${GREEN} Swappiness enabled and starting vagrant! ${NC} \n \n"
+sudo vagrant up
+
