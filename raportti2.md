@@ -1,6 +1,6 @@
 # Slavearmy part 2
 
-## Tämä orja-armeija on tehty osaksi Tero Karvisen pitämän kurssin orjakilpailua. Kurssin tiedot osoitteessa: terokarvinen.com
+###### Tämä orja-armeija on tehty osaksi Tero Karvisen pitämän kurssin orjakilpailua. Kurssin tiedot osoitteessa: terokarvinen.com
 
 Koska julkaisin aikaisemmat skriptini, joilla loin orjia useammalle koneelle, niin uskon muiden hyödyntävän niitä joten päätin parannella skriptejä paremman tuloksen saamiseksi.
 
