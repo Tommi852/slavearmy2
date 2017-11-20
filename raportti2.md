@@ -1,21 +1,24 @@
 # Slavearmy part 2
 
-Koska julkaisin aikaisemmat skriptini, joilla loin orjia useammalle koneelle, niin uskon muiden hyödyntävän niitä ja aijon nyt parannella niitä paremman tuloksen saamiseksi.
+## Tämä orja-armeija on tehty osaksi Tero Karvisen pitämän kurssin orjakilpailua. Kurssin tiedot osoitteessa: terokarvinen.com
+
+Koska julkaisin aikaisemmat skriptini, joilla loin orjia useammalle koneelle, niin uskon muiden hyödyntävän niitä joten päätin parannella skriptejä paremman tuloksen saamiseksi.
 
 Aloitin luomalla uuden virtualbox laatikon, johon asensin valmiiksi puppetin ja asetin kaikki tiedot masterpalvelinta varten. Näin säästän aikaa virtuaalikoneiden luonti vaiheessa, kun virtuaali koneiden ei tarvitse hakea netistä ja asentaa kaikkia tiedostoja kuten aikaisemmin.
+Pohjana custom laatikossani oli envimation/ubuntu-xenial. Jätin puppetstarter provisio tiedostoon kuitenkin puppetin sallimis ja käynnistys komennot, sillä testaillessani ne tuottivat ongelmia master palvelimen kanssa sertifikaatin hakemiseen, jos ne olivat päällä custom laatikkoa tehdessä.
 Laatikon luominen onnistui, kun pyöräytin yhden koneen käyntiin johon ajettiin provisio skriptit ja tämän jälkeen kun laatikko oli ylhäällä käytin komentoa:
-Pohjana custom laatikossani oli envimation/ubuntu-xenial.
 ```
 vagrant package --output custom.box
 ```
 Joka sulki käynnissä olevan laatikon ja loi siitä uuden base boxin, jolla voi jatkossa asentaa useampia koneita.
 Latasin kyseisen laatikon omalle palvelimelleni ja vaihdoin Vagrantfileen kohtan config.vm.box osoitteen, josta uusi lattikko löytyy.
-Koska provisioskripti on jo laatikkoon asennettuna, voin poistaa Vagrantfilestä provisioskriptin asennus kohdan.
+Koska provisioskripti on jo osittain asennettuna voin poistaa muut kohdat, mutta säästän vielä puppet agentin käynnistyksen ja puppetin uudelleen käynnistyksen kohdat.
 
 Uusi Vagrantfile näyttää siis tältä:
 ```
 Vagrant.configure(2) do |config|
   config.vm.box = "http://timonen.me/~tommi/boxit/custom.box"
+  config.vm.provision "shell", path: "puppetstarter"
   config.vm.usable_port_range = (2200..20000)
 
   r = rand(36**10).to_s(36)
@@ -55,7 +58,7 @@ sudo apt-get update
 sudo apt-get -y install virtualbox
 printf "\n ${GREEN} Virtualbox installed! ${NC} \n \n"
 # fdisk -l to check disks
-sudo mount -t ext4 /dev/sda1 /mnt
+sudo mount -t ntfs /dev/sdb1 /mnt
 printf "\n ${GREEN} HDD mounted! ${NC} \n \n \n \n"
 sudo vboxmanage setproperty machinefolder /mnt
 printf "\n ${GREEN} Machine folder changed! ${NC} \n \n"
@@ -71,4 +74,11 @@ printf "\n ${GREEN} Swappiness enabled and starting vagrant! ${NC} \n \n"
 sudo vagrant up
 ```
 
+Päätin maanantaina 20.11. käydä tuntien jälkeen testaamassa scriptejä ja asentelin niitä noin 25 koneeseen, mutta osa tietokoneista ei suostunut toimimaan skriptieni kanssa vaan ilmoitti, ettei tila riitä.
+Sain kuitenkin 20 konetta toimimaan moitteettomasti ja annoin osan niistä rullata täydet 90 virtuaalista konetta per rauta, mutta kyllästyin asennuksen odotteluun ja katkaisin sen kesken.
+Sain kuitenkin yhteensä 1478 virtuaalista konetta tällä menetelmällä, joten tämä scripti selvästi toimii tuplasti paremmin kuin edellinen. Tietenkin etuna oli myös se, että luokassa 5004 on enemmän keskusmuistia per kone, kuin mitä aikaisemmin käyttämässäni luokassa.
 
+**Yhteensä: 1478 orjaa**
+
+Linkki listaan sertifikaateista: https://github.com/Tommi852/slavearmy2/blob/master/certlist2
+Linkki syslogiin: https://github.com/Tommi852/slavearmy2/blob/master/syslog
