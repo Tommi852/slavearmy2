@@ -77,7 +77,8 @@ sudo vagrant up
 Päätin maanantaina 20.11. käydä tuntien jälkeen testaamassa scriptejä ja asentelin niitä noin 25 koneeseen, mutta osa tietokoneista ei suostunut toimimaan skriptieni kanssa vaan ilmoitti, ettei tila riitä.
 Sain kuitenkin 20 konetta toimimaan moitteettomasti ja annoin osan niistä rullata täydet 90 virtuaalista konetta per rauta, mutta kyllästyin asennuksen odotteluun ja katkaisin sen kesken.
 Sain kuitenkin yhteensä 1478 virtuaalista konetta tällä menetelmällä, joten tämä scripti selvästi toimii tuplasti paremmin kuin edellinen. Tietenkin etuna oli myös se, että luokassa 5004 on enemmän keskusmuistia per kone, kuin mitä aikaisemmin käyttämässäni luokassa.
-
+![Kuva koneista](https://github.com/Tommi852/slavearmy2/raw/master/kuvat/koneet.jpg)
+![Kuva vagrant ikkunasta](https://github.com/Tommi852/slavearmy2/raw/master/kuvat/90konetta.jpg)
 **Yhteensä: 1478 orjaa**
 
 Linkki listaan sertifikaateista: https://github.com/Tommi852/slavearmy2/blob/master/certlist2
