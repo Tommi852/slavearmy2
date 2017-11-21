@@ -17,7 +17,7 @@ Koska provisioskripti on jo osittain asennettuna voin poistaa muut kohdat, mutta
 Uusi Vagrantfile näyttää siis tältä:
 ```
 Vagrant.configure(2) do |config|
-  config.vm.box = "http://timonen.me/~tommi/boxit/custom.box"
+  config.vm.box = "file:///mount/custom.box"
   config.vm.provision "shell", path: "puppetstarter"
   config.vm.usable_port_range = (2200..20000)
 
@@ -48,7 +48,8 @@ Uusi starter skripti näyttää siis tältä:
 GREEN='\033[1;32m'
 NC='\033[0m'
 sudo cp Vagrantfile /home/.
-echo "\n ${GREEN}vagrantfile copied! ${NC} \n \n"
+sudo cp puppetstarter /home/.
+echo "\n ${GREEN} vagrantfile and puppetstarter copied to home! ${NC} \n \n"
 cd /home/
 sudo wget http://timonen.me/~tommi/boxit/vagrant.deb
 printf "\n ${GREEN} Vagrant downloaded! ${NC} \n \n"
@@ -58,7 +59,7 @@ sudo apt-get update
 sudo apt-get -y install virtualbox
 printf "\n ${GREEN} Virtualbox installed! ${NC} \n \n"
 # fdisk -l to check disks
-sudo mount -t ntfs /dev/sdb1 /mnt
+sudo mount -t ntfs /dev/sdb3 /mnt
 printf "\n ${GREEN} HDD mounted! ${NC} \n \n \n \n"
 sudo vboxmanage setproperty machinefolder /mnt
 printf "\n ${GREEN} Machine folder changed! ${NC} \n \n"
@@ -71,6 +72,7 @@ sudo swapon /mnt/swapfile1
 printf "\n ${GREEN} Swap file applied! ${NC} \n \n"
 sudo sysctl vm.swappiness=100
 printf "\n ${GREEN} Swappiness enabled and starting vagrant! ${NC} \n \n"
+sudo wget http://timonen.me/~tommi/boxit/custom.box -P /mount
 sudo vagrant up
 ```
 
